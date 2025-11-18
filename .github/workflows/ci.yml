@@ -33,7 +33,7 @@ jobs:
 
       - name: Check code formatting
         run: |
-          opam exec -- dune exec -- ocamlformat --check
+          find . -name "*.ml" -or -name "*.mli" | xargs opam exec -- ocamlformat --check
 
       - name: Build project
         run: |
