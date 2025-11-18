@@ -1,0 +1,7 @@
+(executable
+ (name tests)
+ (libraries prefix_tree ounit2))
+
+(executable
+ (name property_tests)
+ (libraries prefix_tree qcheck-core qcheck-ounit))
