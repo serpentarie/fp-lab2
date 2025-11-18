@@ -21,12 +21,10 @@ jobs:
         run: opam install dune ounit2 qcheck-core qcheck-ounit ocamlformat -y
 
       - name: Check formatting
-        run: |
-          find src test -type f \( -name "*.ml" -o -name "*.mli" \) \
-            | xargs ocamlformat --check
+        run: opam exec -- ocamlformat --check $(find src test -type f \( -name "*.ml" -o -name "*.mli" \))
 
       - name: Build
         run: opam exec -- dune build @check
         
       - name: Run tests
-        run: dune test
+        run: opam exec -- dune test
