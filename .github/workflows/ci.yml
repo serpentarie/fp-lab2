@@ -33,7 +33,7 @@ jobs:
 
       - name: Check code formatting
         run: |
-          find . -name "*.ml" -or -name "*.mli" | xargs opam exec -- ocamlformat --check
+           find src test -name "*.ml" -o -name "*.mli" | xargs opam exec -- ocamlformat --enable-outside-detected-project --check
 
       - name: Build project
         run: |
