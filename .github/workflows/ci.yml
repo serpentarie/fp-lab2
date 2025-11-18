@@ -1,38 +1,37 @@
 name: lab-2 ci
-
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main 
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up OCaml and OPAM
+      - name: Set up OCaml
         uses: ocaml/setup-ocaml@v3
         with:
-          ocaml-compiler: '5.3.0' 
+          ocaml-compiler: 5.3.0
 
       - name: Install dependencies
-        run: opam install . -y --with-test --with-doc
-
-      - name: Check code formatting
-        run: find src test -name "*.ml" -o -name "*.mli" | xargs opam exec -- ocamlformat --enable-outside-detected-project --check
-
-      - name: Build project
         run: |
-          dune build
+          opam install ocamlformat.0.27.0 alcotest qcheck-alcotest -y
+          # если понадобится ещё что-то — добавляй сюда же
+
+      - name: Check formatting
+        run: |
+          find src test -type f \( -name "*.ml" -o -name "*.mli" \) \
+            | xargs ocamlformat --enable-outside-detected-project --check
+
+      - name: Build
+        run: dune build
 
       - name: Run tests
         run: |
-          dune runtest
-          dune exec test/tests.exe
-          dune exec test/property_tests.exe
+          dune build @runtest      
+          dune exec ./test/tests.exe -- --verbose
+          dune exec ./test/property_tests.exe
