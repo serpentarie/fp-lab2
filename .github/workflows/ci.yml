@@ -22,18 +22,10 @@ jobs:
           ocaml-compiler: '5.3.0' 
 
       - name: Install dependencies
-        run: |
-          opam update
-          opam switch create my-switch 5.3.0 --deps-only
-          eval $(opam env)
-
-      - name: Install ocamlformat 0.27.0
-        run: |
-          opam install ocamlformat.0.27.0
+        run: opam install . -y --with-test --with-doc
 
       - name: Check code formatting
-        run: |
-           find src test -name "*.ml" -o -name "*.mli" | xargs opam exec -- ocamlformat --enable-outside-detected-project --check
+        run: find src test -name "*.ml" -o -name "*.mli" | xargs opam exec -- ocamlformat --enable-outside-detected-project --check
 
       - name: Build project
         run: |
@@ -42,8 +34,5 @@ jobs:
       - name: Run tests
         run: |
           dune runtest
-          opam exec -- dune exec -- ./test/tests.exe
-
-      - name: Run property-based tests
-        run: |
-          opam exec -- dune exec -- ./test/property_tests.exe
+          dune exec test/tests.exe
+          dune exec test/property_tests.exe
