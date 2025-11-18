@@ -16,10 +16,11 @@ jobs:
         uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: 5.2.0
+          cache: true
+          opam-depext: true
 
       - name: Install dependencies
-        run: |
-          opam install ocamlformat.0.27.0 alcotest qcheck-alcotest -y
+        run: opam install . --deps-only -y
 
       - name: Check formatting
         run: |
@@ -32,5 +33,5 @@ jobs:
       - name: Run tests
         run: |
           dune build @runtest      
-          dune exec ./test/tests.exe -- --verbose
+          dune exec ./test/tests.exe
           dune exec ./test/property_tests.exe
