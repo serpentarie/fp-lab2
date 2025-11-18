@@ -24,7 +24,7 @@ jobs:
         run: opam exec -- ocamlformat --check $(find src test -type f \( -name "*.ml" -o -name "*.mli" \))
 
       - name: Build
-        run: opam exec -- dune build @check
+        run: opam exec -- dune build
         
       - name: Run tests
         run: opam exec -- dune test
