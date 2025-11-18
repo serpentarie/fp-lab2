@@ -27,4 +27,7 @@ jobs:
         run: opam exec -- dune build
         
       - name: Run tests
-        run: opam exec -- dune test
+        run: |
+              opam exec -- dune test
+              opam exec -- dune exec -- ./test/tests.exe
+              opam exec -- dune exec -- ./test/property_tests.exe
