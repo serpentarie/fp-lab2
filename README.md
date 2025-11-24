@@ -123,7 +123,7 @@ let rec compare t1 t2 =
   if c <> 0 then c else cmp_ch t1.children t2.children
 ```
 
-## 5. Использование
+## Использование
 Пример создания мультимножества целых чисел, где числа разбиваются на цифры:
 ```ocaml
 module IntElt = struct
