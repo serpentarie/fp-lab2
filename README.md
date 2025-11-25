@@ -87,7 +87,7 @@ end
 type child = { key : E.component; subtree : t }
 
 and t = { 
-  count : int;        (* Кратность элемента, заканчивающегося здесь *)
+  count : int; 
   children : child list 
 }
 ```
